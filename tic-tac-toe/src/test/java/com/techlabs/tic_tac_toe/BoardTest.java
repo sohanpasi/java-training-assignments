@@ -8,7 +8,8 @@ import org.mockito.Mockito;
 
 class BoardTest {
 
-	Board gameBoard;
+	private Board gameBoard;
+	
 	@BeforeEach
 	void init() {
 		gameBoard = new Board(3);
@@ -19,7 +20,9 @@ class BoardTest {
 	
 		assertTrue(gameBoard.isFreeCells());
 		
-		Cell cellMarkType = new Cell(MarkType.O);
+		Cell cellMarkType = Mockito.mock(Cell.class);
+		cellMarkType.setMarkType(MarkType.X);
+		
 		for(int i=0; i<3; i++) {
 			for(int j=0; j<3; j++) {
 				gameBoard.markCell(i, j, cellMarkType);
@@ -30,8 +33,11 @@ class BoardTest {
 	}
 	
 	@Test
-	void testMarkShell() {
-		Cell cellMarkType = new Cell(MarkType.O);
+	void testMarkShell() 
+	{	
+		Cell cellMarkType = Mockito.mock(Cell.class);
+		cellMarkType.setMarkType(MarkType.X);
+		
 		assertThrows(InvalidLocationException.class, ()->gameBoard.markCell(3, 3, cellMarkType));
 
 		gameBoard.markCell(2, 2, cellMarkType);
